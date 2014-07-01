@@ -25,53 +25,82 @@
 
 	Plugin.prototype = {
 		init: function () {
-			this.options.wrapper = jQuery(this.element);
-			var itens = this.options.wrapper.find('.slidefull-item');
-			var pageTemplate = '';
+			var itens
+			var pages = '';
+			var controls = '';
+			var pagination = '';
+
 			this.options.itens = [];
+			this.options.wrapper = jQuery(this.element);
+			itens = this.options.wrapper.find('.slidefull-item');
 
-
-			itens.each(function(index, element){
-				jQuery(element).hide();
-				this.options.itens.push(jQuery(element));
-
-				pageTemplate = pageTemplate + this.getPageTemplate(index);
+			itens.each(function(index, item){
+				item = jQuery(item);
+				item.hide();
+				this.options.itens.push(item);
+				pages = pages + this.getPageTemplate(index);
 			}.bind(this));
 
+			pagination = this.getPagination(pages);
+			controls = this.getControls();
 
-			var paginationTemplate = '<div class="slidefull-pagination">' + pageTemplate + '</div>';
-			var controlsTemplate = '<div class="slidefull-controls"><div class="slidefull-arrow next"></div><div class="slidefull-arrow prev"></div></div>';
-			this.options.wrapper.append(paginationTemplate);
-			this.options.wrapper.append(controlsTemplate);
+			this.options.wrapper.append(pagination);
+			this.options.wrapper.append(controls);
 
 			this.options.atual = 0;
 			this.options.total = this.options.itens.length;
-			this.go(0);
+
+			this.show(this.options.atual);
 		},
+
 		getPageTemplate: function (index) {
 			return '<div class="slidefull-page" data-page="' + index + '">'+ (index + 1)+ '</div>';
 		},
-		go: function(number){
-			number = number + 1;
-			if(number == this.options.total){
-				number = 0;
-			} else if(number < 0){
-				number = this.options.total - 1;
+
+		getPagination: function(pages){
+			return '<div class="slidefull-pagination">' + pages + '</div>';
+		},
+
+		getControls: function(){
+			return '<div class="slidefull-controls">'+
+						'<div class="slidefull-arrow next"></div>'+
+						'<div class="slidefull-arrow prev"></div>'+
+					'</div>';
+		},
+
+		updateActivePage: function(index){
+			var activePage = this.options.wrapper.find('.slidefull-page.active');
+			var indexPage = this.options.wrapper.find('.slidefull-page[data-page=' + index + ']');
+
+			activePage.removeClass('active');
+			indexPage.addClass('active');
+		},
+
+		show: function(index){
+			index = index + 1;
+
+			if(index == this.options.total){
+				index = 0;
 			}
+			else if(index < 0){
+				index = this.options.total - 1;
+			}
+
 			clearTimeout(this.options.timeout);
 
-			this.options.itens[number].fadeIn();
+			this.options.itens[index].fadeIn();
 			this.options.itens[this.options.atual].fadeOut();
-			jQuery('.slidefull-page.active').removeClass('active');
-			jQuery('.slidefull-page[data-page=' + number + ']').addClass('active');
 
-			this.options.atual = number;
+			this.updateActivePage(index);
+
+			this.options.atual = index;
 			this.options.timeout = setTimeout(function(){
-				this.next();
+				this.showNext();
 			}.bind(this), 1000);
 		},
-		next: function(){
-			this.go(this.options.atual);
+
+		showNext: function(){
+			this.show(this.options.atual);
 		}
 	};
 
