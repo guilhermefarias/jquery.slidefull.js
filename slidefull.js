@@ -96,7 +96,7 @@
 			this.options.atual = index;
 			this.options.timeout = setTimeout(function(){
 				this.showNext();
-			}.bind(this), 1000);
+			}.bind(this), this.options.duration);
 		},
 
 		showNext: function(){
