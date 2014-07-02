@@ -101,9 +101,12 @@
 			this.updateActivePage(index);
 
 			this.options.atual = index;
-			this.options.timeout = setTimeout(function(){
-				this.showNext();
-			}.bind(this), this.options.duration);
+
+			if(this.options.auto){
+				this.options.timeout = setTimeout(function(){
+					this.showNext();
+				}.bind(this), this.options.duration);
+			}
 		},
 
 		showNext: function(){
