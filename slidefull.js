@@ -12,7 +12,8 @@
 		prev: null,
 		next: null,
 		speed: 500,
-		duration: 3000
+		duration: 3000,
+		displayControls: true,
 	};
 
 	function Plugin(element, options) {
@@ -27,7 +28,6 @@
 		init: function () {
 			var itens
 			var pages = '';
-			var controls = '';
 			var pagination = '';
 
 			this.options.itens = [];
@@ -42,10 +42,13 @@
 			}.bind(this));
 
 			pagination = this.getPagination(pages);
-			controls = this.getControls();
+			if(this.options.displayControls){
+				var controls = '';
+				controls = this.getControls();
+				this.options.wrapper.append(controls);
+			}
 
 			this.options.wrapper.append(pagination);
-			this.options.wrapper.append(controls);
 
 			this.options.atual = 0;
 			this.options.total = this.options.itens.length;
