@@ -88,8 +88,15 @@
 
 			clearTimeout(this.options.timeout);
 
-			this.options.itens[index].fadeIn();
-			this.options.itens[this.options.atual].fadeOut();
+			this.options.itens[index].fadeIn({
+				queue: false,
+				duration: this.options.speed
+			});
+
+			this.options.itens[this.options.atual].fadeOut({
+				queue: false,
+				duration: this.options.speed
+			});
 
 			this.updateActivePage(index);
 
