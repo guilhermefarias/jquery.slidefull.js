@@ -15,3 +15,29 @@
 	background-position: center center;
 	background-repeat: no-repeat;
 }
+
+.slidefull-pagination {
+	bottom: 5%;
+	width: 100%;
+	z-index: 50;
+	color: #777;
+	font-size: 16px;
+	text-align: center;
+	position: absolute;
+}
+
+.slidefull-page {
+	padding: 5px;
+	margin: 0 5px;
+	cursor: pointer;
+	display: inline-block;
+	border-radius: 5px;
+	background-color: #222;
+	background-image: linear-gradient(to bottom, #313131, #010101);
+}
+
+.slidefull-page.active {
+	color: #fff;
+	background-color: #000;
+	background-image: none;
+}
