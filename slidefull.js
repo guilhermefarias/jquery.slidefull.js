@@ -52,6 +52,7 @@
 				var pagination = '';
 				pagination = this.getPagination(pages);
 				this.options.wrapper.append(pagination);
+				this.addPaginationActions();
 			}
 
 			this.options.atual = 0;
@@ -87,6 +88,15 @@
 			next.off().on('click', function(e){
 				e.preventDefault();
 				this.showNext();
+			}.bind(this));
+		},
+
+		addPaginationActions: function(){
+			var pagination = this.options.wrapper.find('.slidefull-pagination');
+
+			pagination.off().on('click', '.slidefull-page', function(e){
+				var index = jQuery(e.target).data('page') - 1;
+				this.show(index);
 			}.bind(this));
 		},
 
