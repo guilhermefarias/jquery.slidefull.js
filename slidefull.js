@@ -45,6 +45,7 @@
 				var controls = '';
 				controls = this.getControls();
 				this.options.wrapper.append(controls);
+				this.addControlActions();
 			}
 
 			if(this.options.displayPagination){
@@ -72,6 +73,21 @@
 						'<div class="slidefull-arrow next"></div>'+
 						'<div class="slidefull-arrow prev"></div>'+
 					'</div>';
+		},
+
+		addControlActions: function(){
+			var prev = this.options.wrapper.find('.slidefull-arrow.prev');
+			var next = this.options.wrapper.find('.slidefull-arrow.next');
+
+			prev.off().on('click', function(e){
+				e.preventDefault();
+				this.showPrev();
+			}.bind(this));
+
+			next.off().on('click', function(e){
+				e.preventDefault();
+				this.showNext();
+			}.bind(this));
 		},
 
 		updateActivePage: function(index){
@@ -117,6 +133,10 @@
 
 		showNext: function(){
 			this.show(this.options.atual);
+		},
+
+		showPrev: function(){
+			this.show(this.options.atual - 2);	
 		}
 	};
 
