@@ -114,6 +114,9 @@
 			if(index == this.options.total){
 				index = 0;
 			}
+			else if(index === this.options.atual){
+				return false;
+			}
 			else if(index < 0){
 				index = this.options.total - 1;
 			}
